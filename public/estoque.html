@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/estoque.js" defer></script>
+    <title>Estoque - JMCELL SYSTEM</title>
+</head>
+<body>
+    <header class="cabecalho">
+        <img src="./images/jmcell-sem-fundo-HD.png" alt="Logomarca Jmcell">
+        <b><p id="boasvindas"></p></b>
+        <h1>JMCELL SYSTEM</h1>
+    </header>
+
+    <main>
+        <div class="container_background_home">
+            <nav class="menu_navegacao">
+                <ul>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/financeiro">Financeiro</a></li>
+                    <li><a href="/estoque">Estoque</a></li>
+                </ul>
+            </nav>
+            <div class="Dashboard">
+                <h2>Estoque</h2>
+                <button id="adicionarProduto" class="btn_estoque">Adicionar Produto</button>
+
+                <!-- Filtros de pesquisa e ordenação -->
+                <div class="filtros">
+                    <input type="text" id="searchInput" placeholder="Pesquisar por nome...">
+                    <select id="ordenarSelect">
+                        <option value="nomeAsc">Nome (A-Z)</option>
+                        <option value="nomeDesc">Nome (Z-A)</option>
+                        <option value="precoAsc">Preço (Menor preço)</option>
+                        <option value="precoDesc">Preço (Maior preço)</option>
+                        <option value="quantidadeAsc">Quantidade (Menor)</option>
+                        <option value="quantidadeDesc">Quantidade (Maior)</option>
+                    </select>
+                </div>
+
+                <!-- Tabela de Produtos -->
+                <table id="tabelaEstoque" class="tabela_produtos">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Preço</th>
+                            <th>Valor Total</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Os produtos serão inseridos aqui via JavaScript -->
+                    </tbody>
+                </table>
+
+                <!-- Valor total do estoque -->
+                <p id="valorTotalEstoque"></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Adicionar/Editar Produto -->
+    <div id="modalEditar" style="display:none;">
+        <div class="modal-content">
+            <span id="closeModal" style="cursor: pointer;">&times;</span>
+            <h2 id="tituloForm">Adicionar Produto</h2>
+            <form id="formProduto">
+                <input type="hidden" id="produtoId">
+                <label for="nome">Nome do Produto</label>
+                <input type="text" id="nome" required>
+
+                <label for="quantidade">Quantidade</label>
+                <!-- Quantidade continua sendo um número inteiro -->
+                <input type="number" id="quantidade" required>
+
+                <label for="preco">Preço</label>
+                <!-- Preço permite casas decimais -->
+                <input type="number" id="preco" step="0.01" required>
+
+                <button type="submit">Salvar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Exclusão de Produto -->
+    <div id="modalExcluir" style="display:none;">
+        <div class="modal-content">
+            <span id="closeExcluirModal" style="cursor: pointer;">&times;</span>
+            <h2>Tem certeza que deseja excluir este produto?</h2>
+            <button id="confirmarExcluir">Confirmar</button>
+            <button id="cancelarExcluir">Cancelar</button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,62 +1,66 @@
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import User from '../models/User.js'; // Aqui você vai importar o modelo User
+import User from '../models/User.js';
 
-// Função para cadastrar um novo usuário
-export const cadastrarUsuario = async (req, res) => {
-    const { username, email, password } = req.body;
+// Função para registrar um novo usuário
+export const registerUser = async (req, res) => {
+  const { name, password, confirmpassword } = req.body;
 
-    try {
-        // Verificar se o usuário já existe
-        const usuarioExistente = await User.findOne({ username });
-        if (usuarioExistente) {
-            return res.status(400).json({ message: 'Nome de usuário já existe!' });
-        }
+  // Validações
+  if (!name) {
+    return res.status(422).json({ msg: 'O nome é obrigatório!' });
+  }
+  if (!password) {
+    return res.status(422).json({ msg: 'A senha é obrigatória!' });
+  }
+  if (password !== confirmpassword) {
+    return res.status(422).json({ msg: 'As senhas não coincidem!' });
+  }
 
-        // Hash da senha (criptografando)
-        const salt = await bcrypt.genSalt(10);
-        const senhaHash = await bcrypt.hash(password, salt);
+  // Verifica se o usuário já existe
+  const userExists = await User.findOne({ name });
+  if (userExists) {
+    return res.status(422).json({ msg: 'Nome de usuário já existe!' });
+  }
 
-        // Criar um novo usuário
-        const novoUsuario = new User({
-            username,
-            email,
-            password: senhaHash,
-        });
+  // Criptografando a senha
+  const salt = await bcrypt.genSalt(12);
+  const passwordHash = await bcrypt.hash(password, salt);
 
-        // Salvar o novo usuário no banco de dados
-        await novoUsuario.save();
-
-        res.status(201).json({ message: 'Usuário cadastrado com sucesso!' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Erro ao cadastrar usuário.' });
-    }
+  try {
+    const user = new User({ name, password: passwordHash });
+    await user.save();
+    return res.status(201).json({ msg: 'Usuário criado com sucesso!' });
+  } catch (err) {
+    return res.status(500).json({ msg: 'Erro ao criar usuário', error: err });
+  }
 };
 
-// Função para autenticar um usuário (login)
-export const autenticarUsuario = async (req, res) => {
-    const { username, password } = req.body;
+// Função para realizar o login (sem token)
+export const loginUser = async (req, res) => {
+  const { name, password } = req.body;
 
-    try {
-        // Verificar se o usuário existe
-        const usuario = await User.findOne({ username });
-        if (!usuario) {
-            return res.status(404).json({ message: 'Usuário não encontrado.' });
-        }
+  // Validações
+  if (!name) {
+    return res.status(422).json({ msg: 'O nome é obrigatório!' });
+  }
+  if (!password) {
+    return res.status(422).json({ msg: 'A senha é obrigatória!' });
+  }
 
-        // Verificar se a senha é válida
-        const senhaValida = await bcrypt.compare(password, usuario.password);
-        if (!senhaValida) {
-            return res.status(400).json({ message: 'Senha incorreta.' });
-        }
+  // Verifica se o usuário existe
+  const user = await User.findOne({ name });
+  if (!user) {
+    return res.status(404).json({ msg: 'Nome de usuário não encontrado!' });
+  }
 
-        // Gerar um token de autenticação (JWT)
-        const token = jwt.sign({ id: usuario._id, username: usuario.username }, 'secreta', { expiresIn: '1h' });
+  // Verifica se a senha está correta
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
+    return res.status(422).json({ msg: 'Senha inválida!' });
+  }
 
-        res.json({ message: 'Login bem-sucedido!', token });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Erro ao autenticar usuário.' });
-    }
+  // Resposta sem token
+  return res.status(200).json({
+    msg: 'Login feito com sucesso!'
+  });
 };
