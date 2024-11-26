@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="./js/estoque.js" defer></script>
     <title>Estoque - JMCELL SYSTEM</title>
 </head>
 <body>
     <header class="cabecalho">
         <img src="./images/jmcell-sem-fundo-HD.png" alt="Logomarca Jmcell">
-        <b><p id="boasvindas"></p></b>
+        <h2><i class="material-icons">inventory</i>Estoque</h2>
         <h1>JMCELL SYSTEM</h1>
     </header>
 
@@ -18,17 +19,18 @@
         <div class="container_background_home">
             <nav class="menu_navegacao">
                 <ul>
-                    <li><a href="/home">Home</a></li>
-                    <li><a href="/financeiro">Financeiro</a></li>
-                    <li><a href="/estoque">Estoque</a></li>
+                    <li><a href="/home"><i class="material-icons">home</i>Home</a></li>
+                    <li><a href="/financeiro"><i class="material-icons">local_atm</i>Financeiro</a></li>
+                    <li><a href="/estoque"><i class="material-icons">inventory</i>Estoque</a></li>
+                </ul>
+                <ul>
+                    <li><a href="/login"><i class="material-icons">logout</i>Sair</a></li>
                 </ul>
             </nav>
             <div class="Dashboard">
-                <h2>Estoque</h2>
-                <button id="adicionarProduto" class="btn_estoque">Adicionar Produto</button>
-
                 <!-- Filtros de pesquisa e ordenação -->
                 <div class="filtros">
+                    <button id="adicionarProduto" class="btn_estoque">Adicionar Produto</button>
                     <input type="text" id="searchInput" placeholder="Pesquisar por nome...">
                     <select id="ordenarSelect">
                         <option value="nomeAsc">Nome (A-Z)</option>
@@ -39,25 +41,28 @@
                         <option value="quantidadeDesc">Quantidade (Maior)</option>
                     </select>
                 </div>
-
+                
                 <!-- Tabela de Produtos -->
-                <table id="tabelaEstoque" class="tabela_produtos">
-                    <thead>
-                        <tr>
-                            <th>Produto</th>
-                            <th>Quantidade</th>
-                            <th>Preço</th>
-                            <th>Valor Total</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Os produtos serão inseridos aqui via JavaScript -->
-                    </tbody>
-                </table>
-
-                <!-- Valor total do estoque -->
-                <p id="valorTotalEstoque"></p>
+                <div id="tabelaContainer">
+                    <table id="tabelaEstoque" class="tabela_produtos">
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Quantidade</th>
+                                <th>Preço</th>
+                                <th>Valor Total</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Os produtos serão inseridos aqui via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="valorTotalEstoque_Container">
+                    <!-- Valor total do estoque -->
+                    <p id="valorTotalEstoque"></p>
+                </div>
             </div>
         </div>
     </main>

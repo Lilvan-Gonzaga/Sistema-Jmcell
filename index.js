@@ -3,6 +3,7 @@ import express from 'express';
 import { connectToDatabase } from './db.js';
 import authRoutes from './routes/authRoutes.js';
 import estoqueRoutes from './routes/estoqueRoutes.js';
+import financeiroRoutes from './routes/financeiroRoutes.js';
 import path from 'path';
 
 
@@ -45,8 +46,16 @@ app.get('/estoque', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'estoque.html'));
 });
 
+// Rota de financeiro
+app.get('/financeiro', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'financeiro.html'));
+});
+
 // Rota de estoque (API)
 app.use('/api/estoque', estoqueRoutes);
+
+// Rota de financeiro (API)
+app.use('/api/financeiro', financeiroRoutes);
 
 // Rota pública de boas-vindas
 app.get('/', (req, res) => {

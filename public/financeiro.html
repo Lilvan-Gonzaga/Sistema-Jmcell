@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="./js/financeiro.js" defer></script>
+    <title>Financeiro - JMCELL SYSTEM</title>
+</head>
+<body>
+    <header class="cabecalho">
+        <img src="./images/jmcell-sem-fundo-HD.png" alt="Logomarca Jmcell">
+        <h2><i class="material-icons">local_atm</i>Financeiro</h2>
+        <h1>JMCELL SYSTEM</h1>
+    </header>
+
+    <main>
+        <div class="container_background_home">
+            <nav class="menu_navegacao">
+                <ul>
+                    <li><a href="/home"><i class="material-icons">home</i>Home</a></li>
+                    <li><a href="/financeiro"><i class="material-icons">local_atm</i>Financeiro</a></li>
+                    <li><a href="/estoque"><i class="material-icons">inventory</i>Estoque</a></li>
+                </ul>
+                <ul>
+                    <li><a href="/login"><i class="material-icons">logout</i>Sair</a></li>
+                </ul>
+            </nav>
+
+            <div class="Dashboard">
+                <!-- Formulário para adicionar transações -->
+                <div class="adicionarTransacao">
+                    <h2>Adicionar Transação</h2>
+                    <form id="form-transacao">
+                        <input type="text" id="descricao" placeholder="Descrição" required>
+                        <input type="number" id="valor" placeholder="Valor" required>
+                        <select id="tipo" required>
+                            <option value="entrada">Entrada</option>
+                            <option value="saida">Saída</option>
+                        </select>
+                        <button type="submit">Adicionar</button>
+                    </form>
+                </div>
+
+                <!-- Tabela de Transações -->
+                <div class="listaTransacoes">
+                    <h2>Transações</h2>
+                    <table id="tabelaTransacoes">
+                        <thead>
+                            <tr>
+                                <th>Descrição</th>
+                                <th>Tipo</th>
+                                <th>Valor</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-transacoes">
+                            <!-- Transações serão listadas aqui via JS -->
+                        </tbody>
+                    </table>
+                    <h2>Saldo Atual: R$<span id="saldo">0.00</span></h2>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
